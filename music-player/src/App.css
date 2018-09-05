@@ -194,12 +194,12 @@ table {
   top: 50%;
   left: 50%;
   vertical-align: middle;
-  transform: translate3d(2px, 0, 0);
   width: 0px;
   height: 0px;
-  border-top: 6.5px solid transparent;
-  border-bottom: 6.5px solid transparent;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
   border-left: 11px solid #fff;
+  transform: translate3d(2px, -1px, 0);
 }
 .player__button--pause-play:hover {
   transform: scale(1.1);
@@ -247,18 +247,23 @@ table {
   margin-left: 7px;
 }
 
-.player__scroll {
+.player__scroll-boundary {
+  box-sizing: border-box;
   display: inline-block;
   width: calc(95% - 60px);
-  height: 4px;
+  height: 100%;
+  padding: 8px 0;
+  vertical-align: middle;
+}
+
+.player__scroll {
+  height: 100%;
   background: #3a3a3a;
   border-radius: 4px;
-  vertical-align: middle;
 }
 
 .player__scroll-location {
   position: relative;
-  width: 75%;
   height: 100%;
   border-radius: 5px;
   background: #ccc;

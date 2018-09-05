@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import HorizontalSlider from './horizontalSlider.js';
 
 class App extends Component {
   render() {
@@ -23,9 +24,7 @@ class App extends Component {
               </div>
               <div className="player__scroll-wrap">
                 <div className="player__current-time">0:40</div>
-                <div className="player__scroll">
-                  <div className="player__scroll-location"></div>
-                </div>
+                <HorizontalSlider />
                 <div className="player__total-time">3:17</div>
               </div>
             </div>
