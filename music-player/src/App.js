@@ -25,7 +25,7 @@ class App extends Component {
               <div className="player__scroll-wrap">
                 <div className="player__current-time">0:40</div>
                 <HorizontalSlider />
-                <div className="player__total-time">3:17</div>
+                <div className="player__total-time">3:16</div>
               </div>
             </div>
           </div>
