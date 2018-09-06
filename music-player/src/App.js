@@ -4,6 +4,28 @@ import './App.css';
 import HorizontalSlider from './horizontalSlider.js';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {percentage: 0, runningTime: 200000};
+  }
+
+  setLocation(a) {
+    this.setState({percentage: a});
+  }
+
+  convertTime(milliseconds) {
+    const date = new Date(milliseconds);
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const formattedMinutes = minutes.toString();
+    const formattedSeconds = seconds.toString().padStart(2, 0);
+    return `${formattedMinutes}:${formattedSeconds}`;
+  }
+
+  calcCurrentTime(percentage, runningTime) {
+    return ( percentage / 100 ) * runningTime;
+  }
+
   render() {
     return (
       <section className="player">
@@ -23,9 +45,9 @@ class App extends Component {
                 <div className="player__button player__button--repeat"></div>
               </div>
               <div className="player__scroll-wrap">
-                <div className="player__current-time">0:40</div>
-                <HorizontalSlider />
-                <div className="player__total-time">3:16</div>
+                <div className="player__current-time">{this.convertTime(this.calcCurrentTime(this.state.percentage,this.state.runningTime))}</div>
+                <HorizontalSlider onChangePosition={this.setLocation.bind(this)}/>
+                <div className="player__total-time">{this.convertTime(this.state.runningTime)}</div>
               </div>
             </div>
           </div>
