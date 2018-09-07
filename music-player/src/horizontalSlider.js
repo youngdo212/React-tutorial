@@ -6,18 +6,23 @@ class HorizontalSlider extends Component {
     this.state = {positionPercentage: props.initialPositionPercentage || 0};
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.initialPositionPercentage !== prevProps.initialPositionPercentage) {
+      this.setState({positionPercentage: this.props.initialPositionPercentage});
+    }
+  }
+
   changePosition({currentTarget, clientX}) {
     const {width: sliderWidth, left: sliderLeftX, right: sliderRightX} = currentTarget.getBoundingClientRect();
 
-    const positionPercentage = this.calcPositionPercentage({sliderWidth, sliderLeftX, sliderRightX, clientX}) || this.props.positionPercentage;
-
+    // releasing mouse
+    const positionPercentage = clientX === 0 ? this.state.positionPercentage : this.calcPositionPercentage({sliderWidth, sliderLeftX, sliderRightX, clientX});
     this.setState({positionPercentage});
     this.props.onChangePosition && this.props.onChangePosition(positionPercentage);
   }
 
   calcPositionPercentage({sliderWidth, sliderLeftX, sliderRightX, clientX}) {
-    if(clientX === 0) return null; // when releasing mouse
-    else if(clientX >= sliderRightX) return 100;
+    if(clientX >= sliderRightX) return 100;
     else if(clientX < sliderLeftX) return 0;
     
     const positionWidth = clientX - sliderLeftX;
@@ -34,14 +39,24 @@ class HorizontalSlider extends Component {
     this.props.onReleaseMouse && this.props.onReleaseMouse();
   }
 
+  pressMouse() {
+    this.props.onPressMouse && this.props.onPressMouse();
+  }
+
   render(){
     return (
     <div
       className="player__scroll-boundary"
       draggable='true'
-      onDragStart={this.setDragImageInvisible.bind(this)}
+      onDragStart={(e) => {
+        this.pressMouse();
+        this.setDragImageInvisible(e);
+      }}
       onDrag={this.changePosition.bind(this)}
-      onMouseDown={this.changePosition.bind(this)}
+      onMouseDown={(e) => {
+        this.pressMouse();
+        this.changePosition(e);
+      }}
       onMouseUp = {this.releaseMouse.bind(this)}
       onDragEnd = {this.releaseMouse.bind(this)}>
       <div className="player__scroll">

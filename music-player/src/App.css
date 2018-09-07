@@ -172,7 +172,7 @@ table {
 .player__button--repeat {
   background: no-repeat center/100% url(./images/repeat.png);
 }
-.player__button--pause-play {
+.player__button--play {
   box-sizing: border-box;
   width: 33px;
   height: 33px;
@@ -182,13 +182,13 @@ table {
   transition: transform 0.05s;
   text-align: center;
 }
-.player__button--pause-play::before {
+.player__button--play::before {
   content: "";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
 }
-.player__button--pause-play::after {
+.player__button--play::after {
   content: "";
   display: inline-block;
   top: 50%;
@@ -201,7 +201,40 @@ table {
   border-left: 11px solid #fff;
   transform: translate3d(2px, -1px, 0);
 }
-.player__button--pause-play:hover {
+.player__button--play:hover {
+  transform: scale(1.1);
+  border-color: #fff;
+}
+.player__button--pause {
+  box-sizing: border-box;
+  width: 33px;
+  height: 33px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.05s;
+  text-align: center;
+}
+.player__button--pause::before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.player__button--pause::before, .player__button--pause::after {
+  content: "";
+  width: 3px;
+  height: 13px;
+  background: #fff;
+  display: inline-block;
+  vertical-align: middle;
+  transform: translate3d(0, 8px, 0);
+  margin-right: 5px;
+}
+.player__button--pause::after {
+  margin-right: 0px;
+}
+.player__button--pause:hover {
   transform: scale(1.1);
   border-color: #fff;
 }

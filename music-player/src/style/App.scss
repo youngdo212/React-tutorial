@@ -114,7 +114,7 @@ $player-height: 70px;
     background: no-repeat center/100% url(./images/repeat.png);
   }
 
-  &--pause-play {
+  &--play {
     box-sizing: border-box;
     width: 33px; height: 33px;
     border: 1px solid #ccc;
@@ -131,6 +131,35 @@ $player-height: 70px;
       vertical-align: middle;
       @include arrow($direction: right, $width: 11px, $height: 14px, $color: #fff);
       transform: translate3d(2px, -1px, 0);
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      border-color: #fff
+    }
+  }
+
+  &--pause {
+    box-sizing: border-box;
+    width: 33px; height: 33px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    position: relative;
+    transition: transform .05s;
+    text-align: center;
+    @include vertical-align-helper;
+
+    &::before, &::after {
+      content: '';
+      width: 3px; height: 13px; background: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      transform: translate3d(0, 8px, 0);
+      margin-right: 5px;
+    }
+
+    &::after {
+      margin-right: 0px;
     }
 
     &:hover {
