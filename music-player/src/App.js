@@ -6,11 +6,12 @@ import HorizontalSlider from './horizontalSlider.js';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {percentage: 0, runningTime: 200000};
+    this.state = {intervalID: null, onPlay: false, runningTime: 200000, currentTime: 0};
   }
 
-  setLocation(a) {
-    this.setState({percentage: a});
+  setLocation(percentage) {
+    const currentTime = (percentage / 100) * this.state.runningTime;
+    this.setState({currentTime: currentTime});
   }
 
   convertTime(milliseconds) {
@@ -21,9 +22,24 @@ class App extends Component {
     const formattedSeconds = seconds.toString().padStart(2, 0);
     return `${formattedMinutes}:${formattedSeconds}`;
   }
+  
+  play() {
+    console.log('now playing...');
+  }
 
-  calcCurrentTime(percentage, runningTime) {
-    return ( percentage / 100 ) * runningTime;
+  pause() {
+    console.log('im paused!');
+  }
+
+  run() {
+    this.state.onPlay ? this.play() : this.pause();
+  }
+
+  togglePlayButton() {
+    this.setState(state => {
+      return {onPlay: state.onPlay ? false: true}
+    })
+    this.run(); // promise로 해야될 듯
   }
 
   render() {
@@ -40,13 +56,19 @@ class App extends Component {
               <div className="player__button-wrap">
                 <div className="player__button player__button--shuffle"></div>
                 <div className="player__button player__button--back"></div>
-                <div className="player__button player__button--pause-play"></div>
+                <div
+                  onClick={this.togglePlayButton.bind(this)}
+                  className="player__button player__button--pause-play"
+                  style={{background: this.state.onPlay ? 'red' : 'none'}}></div>
                 <div className="player__button player__button--forward"></div>
                 <div className="player__button player__button--repeat"></div>
               </div>
               <div className="player__scroll-wrap">
-                <div className="player__current-time">{this.convertTime(this.calcCurrentTime(this.state.percentage,this.state.runningTime))}</div>
-                <HorizontalSlider onChangePosition={this.setLocation.bind(this)}/>
+                <div className="player__current-time">{this.convertTime(this.state.currentTime)}</div>
+                <HorizontalSlider
+                onChangePosition={this.setLocation.bind(this)}
+                onReleaseMouse={this.run.bind(this)}
+                position={this.state.position}/>
                 <div className="player__total-time">{this.convertTime(this.state.runningTime)}</div>
               </div>
             </div>
